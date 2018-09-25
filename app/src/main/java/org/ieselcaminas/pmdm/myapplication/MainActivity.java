@@ -62,28 +62,34 @@ public class MainActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Button button=(Button)v;
-                button.setText(currentPlayer.symbol);
+                Button button = (Button) v;
 
-                changePlayer();
+                if (button.getText().equals("")) {
 
-                displayTurn();
+                    button.setText(currentPlayer.symbol);
+
+                    changePlayer();
+
+                    displayTurn();
+                }
+
+
             }
         });
     }
 
     private void displayTurn() {
-        TextView textView=findViewById(R.id.textTurn);
-        textView.setText("Turn player "+ currentPlayer.name
+        TextView textView = findViewById(R.id.textTurn);
+        textView.setText("Turn player " + currentPlayer.name
                 + " Symbol: "
                 + currentPlayer.symbol);
     }
 
     private void changePlayer() {
-        if(currentPlayer==player1){ // no hace falta .equals porque compara punteros, no contenido...
-            currentPlayer=player2;
-        }else{
-            currentPlayer=player1;
+        if (currentPlayer == player1) { // no hace falta .equals porque compara punteros, no contenido...
+            currentPlayer = player2;
+        } else {
+            currentPlayer = player1;
         }
     }
 }
