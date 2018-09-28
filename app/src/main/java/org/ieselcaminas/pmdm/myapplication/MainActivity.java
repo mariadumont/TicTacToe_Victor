@@ -33,6 +33,18 @@ public class MainActivity extends AppCompatActivity {
     private int numberOfMoves;
 
 
+    private void initGame() {
+        GridLayout gridLayout = findViewById(R.id.gridLayout);
+        gridLayout.setColumnCount(NUM_ROWS);
+        gridLayout.setRowCount(NUM_ROWS);
+
+        addButtons(gridLayout);
+        numberOfMoves=0;
+        stateOfGame=stateOfGame.Playing;
+        currentPlayer=player1;
+        displayTurn();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,18 +52,25 @@ public class MainActivity extends AppCompatActivity {
 
         player1 = new Player("1", "X");
         player2 = new Player("2", "O");
-        currentPlayer = player1;
-        stateOfGame = StateOfGame.Playing;
-        numberOfMoves = 0;
 
-        GridLayout gridLayout = findViewById(R.id.gridLayout);
-        gridLayout.setColumnCount(NUM_ROWS);
-        gridLayout.setRowCount(NUM_ROWS);
-
-        addButtons(gridLayout);
-        displayTurn();
-
+        setActionToResetButton();
+        initGame();
     }
+
+    private void setActionToResetButton() {
+        Button buttonReset=findViewById(R.id.buttonReset);
+        buttonReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GridLayout gridLayout = findViewById(R.id.gridLayout);
+                gridLayout.removeAllViews();
+
+                initGame();
+
+            }
+        });
+    }
+
 
     private void addButtons(GridLayout gridLayout) {
 
