@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">My Application</string>
     <string name="reset">Reset</string>
+    <string name="title_activity_player">Player</string>
+    <string name="buttonPlayer">Set players</string>
+    <string name="namePlayer1">Name player 1</string>
+    <string name="namePlayer2">Name player 2</string>
 </resources>

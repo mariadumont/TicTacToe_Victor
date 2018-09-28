@@ -1,5 +1,6 @@
 package org.ieselcaminas.pmdm.myapplication;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +19,10 @@ public class MainActivity extends AppCompatActivity {
             this.symbol = symbol;
         }
 
+        public void setName(String name) {
+            this.name = name;
+        }
+
     }
 
     enum StateOfGame {
@@ -33,15 +38,17 @@ public class MainActivity extends AppCompatActivity {
     private int numberOfMoves;
 
 
+
+
     private void initGame() {
         GridLayout gridLayout = findViewById(R.id.gridLayout);
         gridLayout.setColumnCount(NUM_ROWS);
         gridLayout.setRowCount(NUM_ROWS);
 
         addButtons(gridLayout);
-        numberOfMoves=0;
-        stateOfGame=stateOfGame.Playing;
-        currentPlayer=player1;
+        numberOfMoves = 0;
+        stateOfGame = stateOfGame.Playing;
+        currentPlayer = player1;
         displayTurn();
     }
 
@@ -50,15 +57,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        player1 = new Player("1", "X");
-        player2 = new Player("2", "O");
+        //comunicacion entre ACTIVITIES
+        Intent intent=getIntent();
+
+        player1 = new Player(intent.getExtras().getString("player1"), "X");
+        player2 = new Player(intent.getExtras().getString("player2"), "O");
+
+
 
         setActionToResetButton();
         initGame();
     }
 
     private void setActionToResetButton() {
-        Button buttonReset=findViewById(R.id.buttonReset);
+        Button buttonReset = findViewById(R.id.buttonReset);
         buttonReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,9 +113,9 @@ public class MainActivity extends AppCompatActivity {
                     numberOfMoves++;
 
                     stateOfGame = checkWinner();
-                    if(stateOfGame!=StateOfGame.Playing){
+                    if (stateOfGame != StateOfGame.Playing) {
                         displayEndOfGame();
-                    }else{
+                    } else {
                         changePlayer();
                         displayTurn();
                     }
@@ -117,11 +129,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void displayEndOfGame() {
         TextView textView = findViewById(R.id.textTurn);
-        if(stateOfGame==StateOfGame.Draw){
+        if (stateOfGame == StateOfGame.Draw) {
             textView.setText("DRAW");
-        }else{
-            if(stateOfGame==StateOfGame.Winner){
-                textView.setText("Winner: " + currentPlayer.name + " (Symbol: "+ currentPlayer.symbol + ")");
+        } else {
+            if (stateOfGame == StateOfGame.Winner) {
+                textView.setText("Winner: " + currentPlayer.name + " (Symbol: " + currentPlayer.symbol + ")");
             }
         }
     }
